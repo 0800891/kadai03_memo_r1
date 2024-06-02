@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <input type="file" id="imgUpload">
+  <img id="uploaded" src="" alt="" width="400" height="400">
+  <button id="imgButton">画像表示</button>
+  
+  <script>
+  const uploadPhotoButton = document.querySelector('#imgUpload');
+  
+
+  
+
+      uploadPhotoButton.addEventListener("change", function() {        
+          let file = uploadPhotoButton.files[0]; //読み込んだファイルを格納
+          const reader = new FileReader(); //ファイル読み込みのためのオブジェクトのインスタンス化
+          reader.onload = () => { 
+            console.dir(file);        //onload 読み込みが終わったときに発火する
+            let photo = reader.result;  //読み込んだ画像ファイルを格納
+            localStorage.setItem('dataURLimg', photo); //localstorageに保存
+          }
+          reader.readAsDataURL(file);     //アップロードファイルのDataURL化
+      });
+
+      const imgButton = document.querySelector('#imgButton');
+      imgButton.addEventListener("click", function() { 
+        const uploaded = document.querySelector('#uploaded');
+        uploaded.src = localStorage.getItem('dataURLimg'); //localstorageから呼び出し
+      });
+
+  </script>
+</body>
+</html>
